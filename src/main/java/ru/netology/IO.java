@@ -51,7 +51,7 @@ public class IO {
         return jsoResult;
     }
 
-    public static void saveBin(File dataFile, List<String[]> listProducts) {
+    public static void saveBin(File dataFile, List<ProductString> listProducts) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dataFile))) {
             oos.writeObject(listProducts);
         } catch (Exception e) {
@@ -59,11 +59,11 @@ public class IO {
         }
     }
 
-    @SuppressWarnings("unchecked") //убираем предупреждение, тк до этого мы записали List<String[]>, его же и считываем
-    public static List<String[]> loadBin(File dataFile) {
-        List<String[]> listProducts = null;
+   @SuppressWarnings("unchecked") //убираем предупреждение, тк до этого мы записали List<String[]>, его же и считываем
+    public static List<ProductString> loadBin(File dataFile) {
+        List<ProductString> listProducts = null;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dataFile))) {
-            listProducts = (List<String[]>) ois.readObject();
+            listProducts = (List<ProductString>) ois.readObject();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

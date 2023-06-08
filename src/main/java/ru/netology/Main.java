@@ -5,7 +5,6 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
-
 public class Main {
     private static final int PORT = 8989;
 
@@ -13,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         File tsvFile = new File("categories.tsv");
         File dataFile = new File("data.bin");
-        List<String[]> listProducts = new ArrayList<>();
+        List<ProductString> listProducts = new ArrayList<>();
         String category;
 
         //считываем tsv в мапу
@@ -25,10 +24,10 @@ public class Main {
         Set<String> dateSet = new HashSet<>();
 
         //загружаем список купленных товаров
-        if (dataFile.exists()) {
+       if (dataFile.exists()) {
             listProducts = IO.loadBin(dataFile);
-            for (String[] list : listProducts) {
-                dateSet.add(list[2]);
+            for (ProductString list : listProducts) {
+                dateSet.add(list.getDate());
             }
         }
 
@@ -49,9 +48,9 @@ public class Main {
                     category = mapFromFile.getOrDefault(title, "другое");
 
                     //Создаем и заполняем список купленных товаров и возможных дат
-                    String[] string = new String[]{title, category, date, sum};
-                    listProducts.add(string);
-                    dateSet.add(string[2]);
+                    ProductString productString = new ProductString(title, category, date, sum);
+                    listProducts.add(productString);
+                    dateSet.add(productString.getDate());
 
                     //periodCategory (parameter period = 4 - год, 7 - месяц, 10 - день)
                     Map<String, String> maxCategory = Max.category(listProducts, categorySet);
